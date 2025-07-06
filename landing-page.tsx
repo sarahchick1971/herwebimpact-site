@@ -1,10 +1,11 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Building2, Leaf, Heart, CheckCircle } from "lucide-react"
-import { useEffect } from "react"
+import { Users, Building2, Leaf, Heart, CheckCircle, Menu, X } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export default function Component() {
+  const [menuOpen, setMenuOpen] = useState(false)
   useEffect(() => {
     // Ensure smooth scrolling is enabled
     document.documentElement.style.scrollBehavior = "smooth"
@@ -32,40 +33,59 @@ export default function Component() {
     <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-yellow-400 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div
             className="text-2xl font-bold text-green-800 cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             Her Web Impact
           </div>
-          <nav className="hidden md:flex space-x-8 justify-center flex-1">
-            <button
-              onClick={() => scrollToSection("about")}
-              className="text-black hover:text-green-800 font-medium text-lg cursor-pointer"
-            >
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex space-x-8 items-center">
+            <button onClick={() => scrollToSection("about")} className="text-black hover:text-green-800 font-medium">
               About
             </button>
-            <button
-              onClick={() => scrollToSection("impact-areas")}
-              className="text-black hover:text-green-800 font-medium text-lg cursor-pointer"
-            >
+            <button onClick={() => scrollToSection("impact-areas")} className="text-black hover:text-green-800 font-medium">
               What We Do
             </button>
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="text-black hover:text-green-800 font-medium text-lg cursor-pointer"
-            >
+            <button onClick={() => scrollToSection("projects")} className="text-black hover:text-green-800 font-medium">
               Focus Areas
             </button>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-900 font-medium transition-colors"
+            >
+              Contact Us
+            </button>
           </nav>
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="bg-green-800 text-white px-6 py-2 rounded-lg hover:bg-green-900 font-medium transition-colors"
-          >
-            Contact Us
+
+          {/* Mobile Hamburger */}
+          <button className="md:hidden text-green-900" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
+
+        {/* Mobile Dropdown Nav */}
+        {menuOpen && (
+          <div className="md:hidden bg-yellow-300 px-4 py-4 space-y-4 text-center">
+            <button onClick={() => scrollToSection("about")} className="block w-full text-lg text-green-900 font-semibold">
+              About
+            </button>
+            <button onClick={() => scrollToSection("impact-areas")} className="block w-full text-lg text-green-900 font-semibold">
+              What We Do
+            </button>
+            <button onClick={() => scrollToSection("projects")} className="block w-full text-lg text-green-900 font-semibold">
+              Focus Areas
+            </button>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="block w-full bg-green-800 text-white py-2 rounded-lg font-medium"
+            >
+              Contact Us
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -81,17 +101,15 @@ export default function Component() {
               </p>
             </div>
             <div className="relative">
-              <div className="w-300 h-64 bg-green-100 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-200 h-32 bg-green-800 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+              <div className="text-center">
+                <div className="bg-green-800 rounded-2xl mx-auto mb-4 overflow-hidden w-full max-w-sm aspect-[4/3]">
                   <img
-                      src="/images/hands.jpg"
-                      alt="Empowering Women"
-                      className="scale-125 object-center w-full h-full"
-                    />
-                  </div>
-                  <div className="text-green-800 font-semibold">Empowering Women</div>
+                    src="/images/hands.jpg"
+                    alt="Empowering Women"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+                <div className="text-green-800 font-semibold">Empowering Women</div>
               </div>
             </div>
           </div>
@@ -359,39 +377,41 @@ export default function Component() {
         </div>
       </section>
 
-{/* Footer */}
-<footer className="bg-green-900 text-white py-8">
-  <div className="container mx-auto px-4">
-    
-    {/* Top row: 3 evenly spaced sections */}
-    <div className="grid grid-cols-1 md:grid-cols-3 items-center text-sm mb-4 text-center md:text-left">
-      
-      {/* Left: Company name */}
-      <div className="font-semibold text-lg mb-4 md:mb-0">
-        Her Web Impact CIC
-      </div>
+    {/* Footer */}
+    <footer className="bg-green-900 text-white py-8">
+      <div className="container mx-auto px-4">
+        
+        {/* Top row: 3 evenly spaced sections */}
+        <div className="grid grid-cols-1 md:grid-cols-3 items-center text-sm mb-4 text-center md:text-left">
+          
+          {/* Left: Company name */}
+          <div className="font-semibold text-lg mb-4 md:mb-0">
+            Her Web Impact CIC
+          </div>
 
-      {/* Middle: Section links */}
-      <div className="flex justify-center space-x-4 mb-4 md:mb-0">
-        <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
-        <a href="#projects" className="hover:text-yellow-400 transition-colors">Projects</a>
-        <a href="#contact" className="hover:text-yellow-400 transition-colors">Contact</a>
-      </div>
+          {/* Middle: Section links */}
+          <div className="flex justify-center space-x-4 mb-4 md:mb-0">
+            <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
+            <a href="#projects" className="hover:text-yellow-400 transition-colors">Projects</a>
+            <a href="#contact" className="hover:text-yellow-400 transition-colors">Contact</a>
+          </div>
 
-      {/* Right: Social links */}
-      <div className="flex justify-center md:justify-end space-x-4">
-        <span className="text-green-200">Follow us:</span>
-        <a href="#" className="hover:text-yellow-400 transition-colors">Instagram</a>
-        <a href="#" className="hover:text-yellow-400 transition-colors">LinkedIn</a>
-      </div>
-    </div>
+          {/* 
+            Right: Social links 
+            <div className="flex justify-center md:justify-end space-x-4">
+              <span className="text-green-200">Follow us:</span>
+              <a href="#" className="hover:text-yellow-400 transition-colors">Instagram</a>
+              <a href="#" className="hover:text-yellow-400 transition-colors">LinkedIn</a>
+            </div>
+          */}
+        </div>
 
-    {/* Bottom row: copyright */}
-    <div className="text-sm text-green-200 text-center md:text-left">
-      © 2025 Her Web Impact CIC. All rights reserved.
-    </div>
-  </div>
-</footer>
+        {/* Bottom row: copyright */}
+        <div className="text-sm text-green-200 text-center md:text-left">
+          © 2025 Her Web Impact CIC. All rights reserved.
+        </div>
+      </div>
+    </footer>
     </div>
   )
 }
