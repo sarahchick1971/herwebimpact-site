@@ -4,7 +4,6 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Her Web Impact',
   description: 'Empowering communities through digital tools',
-  generator: 'Her Web Impact',
 }
 
 export default function RootLayout({
@@ -12,9 +11,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+  return <>{children}</>
 }
+
