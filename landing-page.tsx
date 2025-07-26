@@ -38,7 +38,7 @@ export default function Component() {
             className="text-2xl font-bold text-green-800 cursor-pointer"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            Her Web Impact
+            Her Web Impact CIC
           </div>
 
           {/* Desktop Nav */}
@@ -96,8 +96,9 @@ export default function Component() {
               <h1 className="text-5xl lg:text-6xl font-bold text-black mb-6 leading-tight">
                 Digital tools made with communities, not just for them
               </h1>
-              <p className="text-lg text-black font-medium max-w-lg">
-                We are women-led, rooted in lived experience, and powered by purpose.
+              <p className="text-lg text-black font-medium max-w-lg mt-2">
+                A Community Interest Company supporting digital inclusion and women-led tech.
+                We are rooted in lived experience, and powered by purpose.
               </p>
             </div>
             <div className="relative">
@@ -305,7 +306,7 @@ export default function Component() {
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
-                        <span className="text-gray-700">Email: hello@herwebimpact.org</span>
+                        <span className="text-gray-700">Email: hello@herwebimpact.org.uk</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <span className="text-gray-700">Based in Cardiff, Wales, UK</span>
@@ -366,7 +367,7 @@ export default function Component() {
 
               {/* Bright yellow button */}
               <a
-                href="mailto:hello@herwebimpact.org"
+                href="mailto:hello@herwebimpact.org.uk"
                 className="bg-yellow-400 text-black py-3 px-6 rounded-lg hover:bg-yellow-500 font-medium transition-colors"
               >
                 Email Us
@@ -380,7 +381,7 @@ export default function Component() {
     {/* Footer */}
     <footer className="bg-green-900 text-white py-8">
       <div className="container mx-auto px-4">
-        
+
         {/* Top row: 3 evenly spaced sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 items-center text-sm mb-4 text-center md:text-left">
           
@@ -395,21 +396,21 @@ export default function Component() {
             <a href="#projects" className="hover:text-yellow-400 transition-colors">Projects</a>
             <a href="#contact" className="hover:text-yellow-400 transition-colors">Contact</a>
           </div>
-
-          {/* 
-            Right: Social links 
-            <div className="flex justify-center md:justify-end space-x-4">
-              <span className="text-green-200">Follow us:</span>
-              <a href="#" className="hover:text-yellow-400 transition-colors">Instagram</a>
-              <a href="#" className="hover:text-yellow-400 transition-colors">LinkedIn</a>
-            </div>
-          */}
         </div>
 
         {/* Bottom row: copyright */}
         <div className="text-sm text-green-200 text-center md:text-left">
           © 2025 Her Web Impact CIC. All rights reserved.
         </div>
+
+        <div className="text-xs text-green-200 text-center md:text-left mt-2">
+          Registered in England & Wales as a Community Interest Company.  
+          Company No. 16524652.  
+          Registered Office: 47a Glebe street, Penarth, South Glamorgan, Wales, UK.
+          <br />
+          <span className="block mt-1">Her Web Impact CIC exists to support digital inclusion and accessibility through community-designed technology.</span>
+        </div>
+        
       </div>
     </footer>
     </div>
