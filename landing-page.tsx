@@ -406,7 +406,7 @@ export default function Component() {
         <div className="text-xs text-green-200 text-center md:text-left mt-2">
           Registered in England & Wales as a Community Interest Company.  
           Company No. 16524652.  
-          Registered Office: 47a Glebe street, Penarth, South Glamorgan, Wales, UK.
+          Registered Office: 37 Ninian park road, Riverside,Cardiff. South Glamorgan, Wales, UK.
           <br />
           <span className="block mt-1">Her Web Impact CIC exists to support digital inclusion and accessibility through community-designed technology.</span>
         </div>
