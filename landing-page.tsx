@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useState } from "react"
+import type { ReactNode } from "react"
 import {
   Monitor,
   Users,
@@ -15,18 +16,21 @@ import {
   Mail,
   MapPin,
   Handshake,
+  Menu,
+  X,
 } from "lucide-react"
 
-function Circle({
-  className,
-}: {
-  className: string
-}) {
-  return <div className={`pointer-events-none absolute rounded-full bg-[#B86BFF]/20 blur-[0.2px] ${className}`} />
+function Circle({ className }: { className: string }) {
+  return (
+    <div
+      className={`pointer-events-none absolute rounded-full bg-[#B86BFF]/20 blur-[0.2px] ${className}`}
+    />
+  )
 }
 
 export default function Page() {
   const [menu, setMenu] = useState(false)
+  const [pressedItem, setPressedItem] = useState<string | null>(null)
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth"
@@ -48,6 +52,7 @@ export default function Page() {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
     if (!el) return
+
     const headerOffset = 96
     const y = el.getBoundingClientRect().top + window.scrollY - headerOffset
     window.scrollTo({ top: y, behavior: "smooth" })
@@ -66,54 +71,85 @@ export default function Page() {
       <Circle className="w-20 h-20 top-[2200px] left-[70%]" />
       <Circle className="w-24 h-24 top-[2780px] right-[18%]" />
 
-      {/* Floating nav pill */}
-      <div className="fixed top-6 left-0 right-0 z-50 px-4">
-        <div className="mx-auto max-w-5xl flex justify-center">
-          <div className="bg-white/90 backdrop-blur-md border border-[#B86BFF]/30 shadow-sm rounded-full px-3 py-2">
-            <div className="hidden md:flex items-center gap-2">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollTo(item.id)}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-gray-900 hover:bg-[#F3E9FF] hover:text-[#6D28D9] transition-colors"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile */}
-            <div className="md:hidden flex items-center gap-2">
+      {/* DESKTOP PILL MENU (moved up) */}
+      <div className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 z-50">
+        <div className="rounded-full border border-[#B86BFF]/50 bg-white/90 backdrop-blur-md shadow-lg px-4 py-2">
+          <nav className="flex items-center gap-6">
+            {navItems.map((item) => (
               <button
-                onClick={() => setMenu((v) => !v)}
-                className="px-4 py-2 rounded-full text-sm font-semibold text-gray-900 hover:bg-[#F3E9FF] transition-colors"
-                aria-label="Toggle menu"
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="text-sm font-semibold text-gray-900 hover:text-[#8B5CF6] focus:text-[#8B5CF6] transition-colors"
               >
-                Menu
+                {item.label}
               </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* MOBILE: Floating burger (sticky circle) */}
+      <div className="md:hidden fixed top-6 right-6 z-50">
+        <button
+          type="button"
+          onClick={() => setMenu((v) => !v)}
+          className="h-12 w-12 rounded-full bg-white border border-[#B86BFF]/40 shadow-lg flex items-center justify-center hover:bg-[#F3E9FF] transition-colors"
+          aria-label={menu ? "Close menu" : "Open menu"}
+        >
+          {menu ? (
+            <X className="h-5 w-5 text-gray-900" />
+          ) : (
+            <Menu className="h-5 w-5 text-gray-900" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile fullscreen menu overlay */}
+      {menu && (
+        <div className="fixed inset-0 z-40 bg-white/85 backdrop-blur-md md:hidden">
+          <div className="relative h-full w-full flex items-center justify-center px-6">
+            {/* blurred logo background */}
+            <div className="pointer-events-none absolute inset-0 flex items-start justify-center pt-16">
+              <Image
+                src="/images/her-web-impact-logo.png"
+                alt=""
+                width={520}
+                height={260}
+                className="opacity-10 blur-sm"
+                priority
+              />
             </div>
 
-            {menu && (
-              <div className="md:hidden mt-2 p-2 rounded-2xl border border-[#B86BFF]/25 bg-white shadow-sm">
+            {/* menu items */}
+            <div className="relative z-10 w-full max-w-sm text-center">
+              <nav className="space-y-8">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollTo(item.id)}
-                    className="block w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-gray-900 hover:bg-[#F3E9FF] transition-colors"
+                    onPointerDown={() => setPressedItem(item.id)}
+                    onPointerUp={() => setPressedItem(null)}
+                    onPointerCancel={() => setPressedItem(null)}
+                    onBlur={() => setPressedItem(null)}
+                    className={[
+                      "w-full text-2xl font-semibold tracking-tight transition-colors",
+                      pressedItem === item.id ? "text-[#8B5CF6]" : "text-gray-900",
+                      "hover:text-[#8B5CF6] focus:text-[#8B5CF6]",
+                    ].join(" ")}
                   >
                     {item.label}
                   </button>
                 ))}
-              </div>
-            )}
+              </nav>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Page content */}
       <main className="relative">
-        {/* HERO */}
-        <section className="pt-28 md:pt-32 pb-12 md:pb-16">
+        {/* HERO (tightened so banner fits) */}
+        <section className="pt-16 md:pt-18 pb-8">
           <div className="mx-auto max-w-5xl px-4 text-center">
             <div className="flex justify-center">
               <Image
@@ -122,49 +158,47 @@ export default function Page() {
                 width={720}
                 height={360}
                 priority
-                className="w-[300px] md:w-[420px] h-auto"
+                className="w-[300px] md:w-[460px] h-auto"
               />
             </div>
 
-            <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900">
+            <h1 className="mt-3 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900">
               Digital tools made with communities, not just for them
             </h1>
 
-            <p className="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Her Web Impact is a Community Interest Company supporting digital inclusion and women-led tech.
               We are rooted in lived experience and powered by purpose.
             </p>
 
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 flex justify-center">
               <button
                 onClick={() => scrollTo("contact")}
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#B86BFF] to-[#8A4DFF] px-8 py-3 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-lg transition-shadow"
+                className="rounded-full bg-[#8B5CF6] px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#7C3AED] transition-colors"
               >
                 Get in Touch
               </button>
             </div>
-          </div>
-        </section>
 
-        {/* NATIONAL LOTTERY BANNER (fits the V0 style) */}
-        <section aria-label="Funding announcement" className="pb-10">
-          <div className="mx-auto max-w-5xl px-4">
-            <div className="rounded-2xl border border-[#B86BFF]/25 bg-[#F5EDFF] px-4 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
-              <Image
-                src="/images/tnlcf-full-colour-cy.png"
-                alt="The National Lottery Community Fund (Cymru)"
-                width={130}
-                height={130}
-                className="flex-shrink-0"
-              />
-              <div className="text-center sm:text-left">
-                <p className="font-semibold text-gray-900">
-                  We’ve been awarded £19,500 in National Lottery funding for Her Digital Empowerment.
-                </p>
-                <p className="text-gray-700 mt-1 leading-relaxed">
-                  Our 16-week digital skills programme for refugee women in Cardiff is supported by National Lottery players
-                  through The National Lottery Community Fund (Awards for All Wales).
-                </p>
+            {/* NATIONAL LOTTERY BANNER */}
+            <div className="mt-4">
+              <div className="rounded-2xl border border-[#B86BFF]/25 bg-[#F5EDFF] px-4 py-4 md:px-6 md:py-4 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+                <Image
+                  src="/images/tnlcf-full-colour-cy.png"
+                  alt="The National Lottery Community Fund (Cymru)"
+                  width={150}
+                  height={150}
+                  className="flex-shrink-0"
+                />
+                <div className="text-center sm:text-left">
+                  <p className="font-semibold text-gray-900">
+                    We’ve been awarded £19,500 in National Lottery funding for Her Digital Empowerment.
+                  </p>
+                  <p className="text-gray-700 mt-1 leading-relaxed">
+                    Our 16-week digital skills programme for refugee women in Cardiff is supported by National Lottery players
+                    through The National Lottery Community Fund (Awards for All Wales).
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -194,11 +228,10 @@ export default function Page() {
             </div>
           </div>
 
-          {/* pale lilac transition */}
           <div className="bg-[#EEE7FF] h-16" />
         </section>
 
-        {/* WHAT WE DO (big title + 2x2 cards) */}
+        {/* WHAT WE DO */}
         <section id="what-we-do" className="bg-[#EEE7FF]">
           <div className="mx-auto max-w-5xl px-4 pb-16 md:pb-20">
             <div className="text-center">
@@ -237,12 +270,10 @@ export default function Page() {
           </div>
         </section>
 
-        {/* FOCUS AREAS (icons row) */}
+        {/* FOCUS */}
         <section id="focus" className="bg-white">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
-            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
-              Our Focus Areas
-            </h2>
+            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">Our Focus Areas</h2>
             <p className="mt-6 text-center text-gray-700 max-w-3xl mx-auto leading-relaxed">
               We concentrate our efforts on key areas that drive meaningful change in digital accessibility and inclusion.
             </p>
@@ -272,21 +303,16 @@ export default function Page() {
           </div>
         </section>
 
-        {/* GET IN TOUCH (3 cards) */}
+        {/* CONTACT */}
         <section id="contact" className="bg-[#F5F2FF]">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
-            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
-              Get in Touch
-            </h2>
+            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">Get in Touch</h2>
             <p className="mt-6 text-center text-gray-700 max-w-3xl mx-auto leading-relaxed">
               Want to support the mission, propose a collaboration, or simply say hi?
             </p>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
-              <InfoCard
-                icon={<Mail className="w-5 h-5 text-[#8A4DFF]" />}
-                title="Contact Information"
-              >
+              <InfoCard icon={<Mail className="w-5 h-5 text-[#8A4DFF]" />} title="Contact Information">
                 <div className="text-sm text-gray-700 leading-relaxed space-y-2">
                   <p>
                     Email:{" "}
@@ -301,10 +327,7 @@ export default function Page() {
                 </div>
               </InfoCard>
 
-              <InfoCard
-                icon={<Handshake className="w-5 h-5 text-[#8A4DFF]" />}
-                title="Ways to Connect"
-              >
+              <InfoCard icon={<Handshake className="w-5 h-5 text-[#8A4DFF]" />} title="Ways to Connect">
                 <ul className="text-sm text-gray-700 leading-relaxed list-disc pl-5 space-y-2">
                   <li>Collaborate on a digital inclusion project in your community</li>
                   <li>Share your lived experience to help shape our work</li>
@@ -312,17 +335,14 @@ export default function Page() {
                 </ul>
               </InfoCard>
 
-              <InfoCard
-                icon={<Monitor className="w-5 h-5 text-[#8A4DFF]" />}
-                title="Send us an Email"
-              >
+              <InfoCard icon={<Monitor className="w-5 h-5 text-[#8A4DFF]" />} title="Send us an Email">
                 <p className="text-sm text-gray-700 leading-relaxed">
                   Prefer to reach out directly? We’d love to hear from you.
                 </p>
                 <div className="mt-5">
                   <Link
                     href="mailto:hello@herwebimpact.org.uk"
-                    className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#B86BFF] to-[#8A4DFF] px-5 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-shadow"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-[#8B5CF6] px-5 py-3 text-sm font-semibold text-white shadow-md hover:bg-[#7C3AED] transition-colors"
                   >
                     Email Us
                   </Link>
@@ -351,21 +371,11 @@ export default function Page() {
   )
 }
 
-function Card({
-  title,
-  text,
-  icon,
-}: {
-  title: string
-  text: string
-  icon: React.ReactNode
-}) {
+function Card({ title, text, icon }: { title: string; text: string; icon: ReactNode }) {
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">
-          {icon}
-        </div>
+        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
         <h3 className="text-lg font-bold text-gray-900">{title}</h3>
       </div>
       <p className="mt-4 text-sm text-gray-700 leading-relaxed">{text}</p>
@@ -373,47 +383,28 @@ function Card({
   )
 }
 
-function FocusItem({
-  icon,
-  title,
-  text,
-}: {
-  icon: React.ReactNode
-  title: string
-  text: string
-}) {
+function FocusItem({ icon, title, text }: { icon: ReactNode; title: string; text: string }) {
   return (
     <div className="text-center">
-      <div className="mx-auto w-12 h-12 rounded-full bg-[#F3E9FF] flex items-center justify-center">
-        {icon}
-      </div>
+      <div className="mx-auto w-12 h-12 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
       <div className="mt-4 font-bold text-gray-900">{title}</div>
       <div className="mt-2 text-sm text-gray-700 leading-relaxed">{text}</div>
     </div>
   )
 }
 
-function InfoCard({
-  icon,
-  title,
-  children,
-}: {
-  icon: React.ReactNode
-  title: string
-  children: React.ReactNode
-}) {
+function InfoCard({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">
-          {icon}
-        </div>
+        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
         <h3 className="text-lg font-bold text-gray-900">{title}</h3>
       </div>
       <div className="mt-4">{children}</div>
     </div>
   )
 }
+
 
 
 
