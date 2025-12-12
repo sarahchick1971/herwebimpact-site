@@ -1,418 +1,421 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Users, Building2, Leaf, Heart, CheckCircle, Menu, X } from "lucide-react"
-import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useMemo, useState } from "react"
+import {
+  Monitor,
+  Users,
+  Sparkles,
+  HeartHandshake,
+  Accessibility,
+  Network,
+  GitBranch,
+  Globe,
+  Mail,
+  MapPin,
+  Handshake,
+} from "lucide-react"
 
-export default function Component() {
-  const [menuOpen, setMenuOpen] = useState(false)
+function Circle({
+  className,
+}: {
+  className: string
+}) {
+  return <div className={`pointer-events-none absolute rounded-full bg-[#B86BFF]/20 blur-[0.2px] ${className}`} />
+}
+
+export default function Page() {
+  const [menu, setMenu] = useState(false)
+
   useEffect(() => {
-    // Ensure smooth scrolling is enabled
     document.documentElement.style.scrollBehavior = "smooth"
-
-    // Load Google Font
-    // const link = document.createElement("link")
-    // link.href = "https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap"
-    // link.rel = "stylesheet"
-    // document.head.appendChild(link)
+    return () => {
+      document.documentElement.style.scrollBehavior = ""
+    }
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      const headerHeight = 80 // Account for header height
-      const elementPosition = element.offsetTop - headerHeight
-      window.scrollTo({
-        top: elementPosition,
-        behavior: "smooth",
-      })
-    }
+  const navItems = useMemo(
+    () => [
+      { id: "about", label: "About" },
+      { id: "what-we-do", label: "What We Do" },
+      { id: "focus", label: "Focus Areas" },
+      { id: "contact", label: "Contact Us" },
+    ],
+    []
+  )
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    const headerOffset = 96
+    const y = el.getBoundingClientRect().top + window.scrollY - headerOffset
+    window.scrollTo({ top: y, behavior: "smooth" })
+    setMenu(false)
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-yellow-400 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div
-            className="text-2xl font-bold text-green-800 cursor-pointer"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          >
-            Her Web Impact CIC
-          </div>
+    <div className="min-h-screen bg-white text-black relative overflow-hidden">
+      {/* soft floating circles */}
+      <Circle className="w-20 h-20 top-14 left-10" />
+      <Circle className="w-10 h-10 top-40 right-20" />
+      <Circle className="w-14 h-14 top-[520px] left-[55%]" />
+      <Circle className="w-24 h-24 top-[760px] right-16" />
+      <Circle className="w-16 h-16 top-[1180px] left-16" />
+      <Circle className="w-28 h-28 top-[1650px] right-[12%]" />
+      <Circle className="w-20 h-20 top-[2200px] left-[70%]" />
+      <Circle className="w-24 h-24 top-[2780px] right-[18%]" />
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex space-x-8 items-center">
-            <button onClick={() => scrollToSection("about")} className="text-black hover:text-green-800 font-medium">
-              About
-            </button>
-            <button onClick={() => scrollToSection("impact-areas")} className="text-black hover:text-green-800 font-medium">
-              What We Do
-            </button>
-            <button onClick={() => scrollToSection("projects")} className="text-black hover:text-green-800 font-medium">
-              Focus Areas
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-900 font-medium transition-colors"
-            >
-              Contact Us
-            </button>
-          </nav>
-
-          {/* Mobile Hamburger */}
-          <button className="md:hidden text-green-900" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        {/* Mobile Dropdown Nav */}
-        {menuOpen && (
-          <div className="md:hidden bg-yellow-300 px-4 py-4 space-y-4 text-center">
-            <button onClick={() => scrollToSection("about")} className="block w-full text-lg text-green-900 font-semibold">
-              About
-            </button>
-            <button onClick={() => scrollToSection("impact-areas")} className="block w-full text-lg text-green-900 font-semibold">
-              What We Do
-            </button>
-            <button onClick={() => scrollToSection("projects")} className="block w-full text-lg text-green-900 font-semibold">
-              Focus Areas
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="block w-full bg-green-800 text-white py-2 rounded-lg font-medium"
-            >
-              Contact Us
-            </button>
-          </div>
-        )}
-      </header>
-
-      {/* Hero Section */}
-      <section className="bg-yellow-400 py-16 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-black mb-6 leading-tight">
-                Digital tools made with communities, not just for them
-              </h1>
-              <p className="text-lg text-black font-medium max-w-lg mt-2">
-                A Community Interest Company supporting digital inclusion and women-led tech.
-                We are rooted in lived experience, and powered by purpose.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="text-center">
-                <div className="bg-green-800 rounded-2xl mx-auto mb-4 overflow-hidden w-full max-w-sm aspect-[4/3]">
-                  <img
-                    src="/images/hands.jpg"
-                    alt="Empowering Women"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-green-800 font-semibold">Empowering Women</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="bg-green-800 py-12" id="about">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-yellow-400 text-sm mb-2">Why choose Her Web Impact</div>
-              <h2 className="text-3xl font-bold text-white mb-2">Newly launched, proudly purpose-driven.</h2>
-              <p className="text-green-200 max-w-md">
-                We build easy-to-use, multilingual tools that help people access housing, healthcare and support, all
-                shaped with the communities they're for.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Impact Areas Section */}
-      <section className="py-16 bg-gray-50" id="impact-areas">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-pink-300 border-0 p-8 text-center">
-              <CardContent className="p-0">
-                <Users className="w-12 h-12 mx-auto mb-4 text-pink-800" />
-                <h3 className="text-xl font-bold text-pink-800 mb-4">Digital Confidence</h3>
-                <p className="text-pink-700 text-sm">
-                  Hands-on learning, 1:1 support and workshops to help women thrive in digital spaces.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-green-300 border-0 p-8 text-center">
-              <CardContent className="p-0">
-                <Building2 className="w-12 h-12 mx-auto mb-4 text-green-800" />
-                <h3 className="text-xl font-bold text-green-800 mb-4">Inclusive Design</h3>
-                <p className="text-green-700 text-sm">
-                  Building accessible, community-first websites and platforms that reflect the people they serve.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-teal-300 border-0 p-8 text-center">
-              <CardContent className="p-0">
-                <Leaf className="w-12 h-12 mx-auto mb-4 text-teal-800" />
-                <h3 className="text-xl font-bold text-teal-800 mb-4">Creative Collaboration</h3>
-                <p className="text-teal-700 text-sm">
-                  Connecting creators, mentors and organisations to co-design tools that matter.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-yellow-300 border-0 p-8 text-center">
-              <CardContent className="p-0">
-                <Heart className="w-12 h-12 mx-auto mb-4 text-yellow-800" />
-                <h3 className="text-xl font-bold text-yellow-800 mb-4">Real-World Impact</h3>
-                <p className="text-yellow-700 text-sm">
-                  Amplifying unheard voices and empowering communities that need digital support the most.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="py-16" id="projects">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Focus Areas</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                We concentrate our efforts on four key areas that drive meaningful change in digital accessibility and
-                inclusion.
-              </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-pink-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-5 h-5 text-pink-800" />
-                  </div>
-                  <div>
-                    <span className="font-semibold">Accessibility</span>
-                    <br />
-                    <span>Creating digital experiences that work for everyone.</span>
-                  </div>
-                </li>
-                <li className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-5 h-5 text-green-800" />
-                  </div>
-                  <div>
-                    <span className="font-semibold">Community-led Design</span>
-                    <br />
-                    <span>Involving communities in the design process.</span>
-                  </div>
-                </li>
-                <li className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-teal-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-5 h-5 text-teal-800" />
-                  </div>
-                  <div>
-                    <span className="font-semibold">Open Source</span>
-                    <br />
-                    <span>Building transparent, collaborative solutions.</span>
-                  </div>
-                </li>
-                <li className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-yellow-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-5 h-5 text-yellow-800" />
-                  </div>
-                  <div>
-                    <span className="font-semibold">Digital Inclusion</span>
-                    <br />
-                    <span>Bridging the digital divide.</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div className="flex justify-center">
-              <div className="relative">
-                <div className="w-64 h-[500px] bg-black rounded-[2rem] p-2">
-                  <div className="w-full h-full bg-white rounded-[1.5rem] overflow-hidden">
-                    <div className="bg-yellow-400 p-4">
-                      <div className="text-center font-bold">Discover</div>
-                    </div>
-                    <div className="p-4 space-y-4">
-                      <div className="bg-gray-100 rounded-lg p-3">
-                        <div className="w-full h-24 bg-green-200 rounded mb-2"></div>
-                        <div className="font-semibold text-sm">LOCAL</div>
-                      </div>
-                      <div className="bg-gray-100 rounded-lg p-3">
-                        <div className="w-full h-24 bg-blue-200 rounded mb-2"></div>
-                      </div>
-                      <div className="bg-gray-100 rounded-lg p-3">
-                        <div className="w-full h-24 bg-orange-200 rounded mb-2"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Platform Section */}
-      <section className="py-16 bg-gray-50" id="platform">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                The feel-good digital empowerment platform your community will love.
-              </h2>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-teal-400 rounded-lg p-4 text-center text-white">
-                <div className="text-lg font-bold">Digital skills made simple</div>
-              </div>
-              <div className="bg-yellow-400 rounded-lg p-4 text-center">
-                <div className="text-lg font-bold">Creative collaboration</div>
-              </div>
-              <div className="bg-green-400 rounded-lg p-4 text-center text-white">
-                <div className="text-lg font-bold">Local community impact</div>
-              </div>
-              <div className="bg-pink-400 rounded-lg p-4 text-center text-white">
-                <div className="text-lg font-bold">Inclusive engagement</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-     {/* Contact Section */}
-      <section className="py-16 bg-white" id="contact">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-              <p className="text-xl text-gray-600">
-                Want to support the mission, propose a collaboration, or simply say hi?
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* LEFT SIDE – info */}
-              <div className="lg:pr-8">
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Contact Information</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-gray-700">Email: hello@herwebimpact.org.uk</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <span className="text-gray-700">Based in Cardiff, Wales, UK</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Ways to Connect</h3>
-                    <ul className="space-y-3 text-gray-700">
-                      <li className="flex items-start space-x-4">
-                        <div className="w-6 h-6 bg-green-300 rounded-full flex items-center justify-center flex-shrink-0">
-                          <CheckCircle className="w-4 h-4 text-green-800" />
-                        </div>
-                        <span>Collaborate on a digital inclusion project in your community</span>
-                      </li>
-                      <li className="flex items-start space-x-4">
-                        <div className="w-6 h-6 bg-teal-300 rounded-full flex items-center justify-center flex-shrink-0">
-                          <CheckCircle className="w-4 h-4 text-teal-800" />
-                        </div>
-                        <span>Share your lived experience to help shape our work</span>
-                      </li>
-                      <li className="flex items-start space-x-4">
-                        <div className="w-6 h-6 bg-pink-300 rounded-full flex items-center justify-center flex-shrink-0">
-                          <CheckCircle className="w-4 h-4 text-pink-800" />
-                        </div>
-                        <span>Help us test and improve new tools before they launch</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* RIGHT SIDE – email button */}
-              <div className="bg-teal-300 rounded-2xl shadow-md p-8 text-center ">
-              {/* Icon circle in bright pink */}
-              <div className="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center mx-auto">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-white"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+      {/* Floating nav pill */}
+      <div className="fixed top-6 left-0 right-0 z-50 px-4">
+        <div className="mx-auto max-w-5xl flex justify-center">
+          <div className="bg-white/90 backdrop-blur-md border border-[#B86BFF]/30 shadow-sm rounded-full px-3 py-2">
+            <div className="hidden md:flex items-center gap-2">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollTo(item.id)}
+                  className="px-4 py-2 rounded-full text-sm font-medium text-gray-900 hover:bg-[#F3E9FF] hover:text-[#6D28D9] transition-colors"
                 >
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </div>
+                  {item.label}
+                </button>
+              ))}
+            </div>
 
-              {/* Heading and paragraph */}
-              <h3 className="text-2xl font-bold text-green-900 mt-3">Send us an Email</h3>
-              <p className="text-green-800 max-w-sm mx-auto mt-3 mb-5">
-                Prefer to reach out directly? We’d love to hear from you.
+            {/* Mobile */}
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => setMenu((v) => !v)}
+                className="px-4 py-2 rounded-full text-sm font-semibold text-gray-900 hover:bg-[#F3E9FF] transition-colors"
+                aria-label="Toggle menu"
+              >
+                Menu
+              </button>
+            </div>
+
+            {menu && (
+              <div className="md:hidden mt-2 p-2 rounded-2xl border border-[#B86BFF]/25 bg-white shadow-sm">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className="block w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-gray-900 hover:bg-[#F3E9FF] transition-colors"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Page content */}
+      <main className="relative">
+        {/* HERO */}
+        <section className="pt-28 md:pt-32 pb-12 md:pb-16">
+          <div className="mx-auto max-w-5xl px-4 text-center">
+            <div className="flex justify-center">
+              <Image
+                src="/images/her-web-impact-logo.png"
+                alt="Her Web Impact"
+                width={720}
+                height={360}
+                priority
+                className="w-[300px] md:w-[420px] h-auto"
+              />
+            </div>
+
+            <h1 className="mt-6 text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900">
+              Digital tools made with communities, not just for them
+            </h1>
+
+            <p className="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Her Web Impact is a Community Interest Company supporting digital inclusion and women-led tech.
+              We are rooted in lived experience and powered by purpose.
+            </p>
+
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={() => scrollTo("contact")}
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#B86BFF] to-[#8A4DFF] px-8 py-3 text-sm md:text-base font-semibold text-white shadow-md hover:shadow-lg transition-shadow"
+              >
+                Get in Touch
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* NATIONAL LOTTERY BANNER (fits the V0 style) */}
+        <section aria-label="Funding announcement" className="pb-10">
+          <div className="mx-auto max-w-5xl px-4">
+            <div className="rounded-2xl border border-[#B86BFF]/25 bg-[#F5EDFF] px-4 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+              <Image
+                src="/images/tnlcf-full-colour-cy.png"
+                alt="The National Lottery Community Fund (Cymru)"
+                width={130}
+                height={130}
+                className="flex-shrink-0"
+              />
+              <div className="text-center sm:text-left">
+                <p className="font-semibold text-gray-900">
+                  We’ve been awarded £19,500 in National Lottery funding for Her Digital Empowerment.
+                </p>
+                <p className="text-gray-700 mt-1 leading-relaxed">
+                  Our 16-week digital skills programme for refugee women in Cardiff is supported by National Lottery players
+                  through The National Lottery Community Fund (Awards for All Wales).
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT (purple band) */}
+        <section id="about" className="relative">
+          <div className="bg-[#8F6CF3]">
+            <div className="mx-auto max-w-5xl px-4 py-16 md:py-20 text-center text-white relative">
+              <div className="text-xs font-semibold tracking-widest opacity-90">ABOUT US</div>
+
+              <h2 className="mt-5 text-3xl md:text-5xl font-extrabold leading-tight">
+                Building digital confidence through community workshops and collaboration.
+              </h2>
+
+              <p className="mt-6 max-w-3xl mx-auto text-white/90 text-base md:text-lg leading-relaxed">
+                We deliver hands-on workshops, training sessions and community-led design projects that empower women
+                and local organisations to thrive in digital spaces.
               </p>
 
-              {/* Bright yellow button */}
-              <a
-                href="mailto:hello@herwebimpact.org.uk"
-                className="bg-yellow-400 text-black py-3 px-6 rounded-lg hover:bg-yellow-500 font-medium transition-colors"
+              <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-sm md:text-base">
+                <div className="opacity-95">Digital skills made simple</div>
+                <div className="opacity-95">Community workshops</div>
+                <div className="opacity-95">Creative collaboration</div>
+                <div className="opacity-95">Inclusive engagement</div>
+              </div>
+            </div>
+          </div>
+
+          {/* pale lilac transition */}
+          <div className="bg-[#EEE7FF] h-16" />
+        </section>
+
+        {/* WHAT WE DO (big title + 2x2 cards) */}
+        <section id="what-we-do" className="bg-[#EEE7FF]">
+          <div className="mx-auto max-w-5xl px-4 pb-16 md:pb-20">
+            <div className="text-center">
+              <div className="text-sm font-semibold text-[#8A4DFF]">What We Do</div>
+              <h2 className="mt-4 text-3xl md:text-5xl font-extrabold text-gray-900">
+                Newly launched, proudly purpose-driven.
+              </h2>
+              <p className="mt-6 text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                We build easy-to-use, multilingual tools that help people access housing, healthcare and support,
+                shaped with the communities they are designed for.
+              </p>
+            </div>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              <Card
+                title="Digital Confidence"
+                icon={<Users className="w-5 h-5 text-[#8A4DFF]" />}
+                text="Hands-on learning, one-to-one support and workshops to help women thrive in digital spaces."
+              />
+              <Card
+                title="Inclusive Design"
+                icon={<Accessibility className="w-5 h-5 text-[#8A4DFF]" />}
+                text="Building accessible, community-first websites and platforms that reflect the people they serve."
+              />
+              <Card
+                title="Creative Collaboration"
+                icon={<Sparkles className="w-5 h-5 text-[#8A4DFF]" />}
+                text="Connecting creators, mentors and organisations to co-design tools that matter."
+              />
+              <Card
+                title="Real-World Impact"
+                icon={<HeartHandshake className="w-5 h-5 text-[#8A4DFF]" />}
+                text="Amplifying unheard voices and supporting communities that need digital access the most."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* FOCUS AREAS (icons row) */}
+        <section id="focus" className="bg-white">
+          <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
+            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
+              Our Focus Areas
+            </h2>
+            <p className="mt-6 text-center text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              We concentrate our efforts on key areas that drive meaningful change in digital accessibility and inclusion.
+            </p>
+
+            <div className="mt-10 grid gap-8 md:grid-cols-4">
+              <FocusItem
+                icon={<Accessibility className="w-6 h-6 text-[#8A4DFF]" />}
+                title="Accessibility"
+                text="Creating digital experiences that work for everyone."
+              />
+              <FocusItem
+                icon={<Network className="w-6 h-6 text-[#8A4DFF]" />}
+                title="Community-led Design"
+                text="Involving communities in the design process."
+              />
+              <FocusItem
+                icon={<GitBranch className="w-6 h-6 text-[#8A4DFF]" />}
+                title="Open Source"
+                text="Building transparent, collaborative solutions."
+              />
+              <FocusItem
+                icon={<Globe className="w-6 h-6 text-[#8A4DFF]" />}
+                title="Digital Inclusion"
+                text="Bridging the digital divide."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* GET IN TOUCH (3 cards) */}
+        <section id="contact" className="bg-[#F5F2FF]">
+          <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
+            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
+              Get in Touch
+            </h2>
+            <p className="mt-6 text-center text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Want to support the mission, propose a collaboration, or simply say hi?
+            </p>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <InfoCard
+                icon={<Mail className="w-5 h-5 text-[#8A4DFF]" />}
+                title="Contact Information"
               >
-                Email Us
-              </a>
+                <div className="text-sm text-gray-700 leading-relaxed space-y-2">
+                  <p>
+                    Email:{" "}
+                    <a className="text-[#6D28D9] font-semibold hover:underline" href="mailto:hello@herwebimpact.org.uk">
+                      hello@herwebimpact.org.uk
+                    </a>
+                  </p>
+                  <p className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-gray-500" />
+                    Based in Cardiff, Wales, UK
+                  </p>
+                </div>
+              </InfoCard>
+
+              <InfoCard
+                icon={<Handshake className="w-5 h-5 text-[#8A4DFF]" />}
+                title="Ways to Connect"
+              >
+                <ul className="text-sm text-gray-700 leading-relaxed list-disc pl-5 space-y-2">
+                  <li>Collaborate on a digital inclusion project in your community</li>
+                  <li>Share your lived experience to help shape our work</li>
+                  <li>Help us test and improve new tools before they launch</li>
+                </ul>
+              </InfoCard>
+
+              <InfoCard
+                icon={<Monitor className="w-5 h-5 text-[#8A4DFF]" />}
+                title="Send us an Email"
+              >
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Prefer to reach out directly? We’d love to hear from you.
+                </p>
+                <div className="mt-5">
+                  <Link
+                    href="mailto:hello@herwebimpact.org.uk"
+                    className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#B86BFF] to-[#8A4DFF] px-5 py-3 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-shadow"
+                  >
+                    Email Us
+                  </Link>
+                </div>
+              </InfoCard>
             </div>
+          </div>
+        </section>
+
+        {/* FOOTER */}
+        <footer className="bg-white">
+          <div className="mx-auto max-w-5xl px-4 py-10 text-center text-sm text-gray-600">
+            <p className="font-semibold text-gray-800">© {new Date().getFullYear()} Her Web Impact CIC. All rights reserved.</p>
+            <p className="mt-2">Digital tools made with communities, not just for them.</p>
+            <div className="mt-6 text-xs text-gray-500 leading-relaxed">
+              <p>Registered in England & Wales as a Community Interest Company. Company No. 16524652.</p>
+              <p>Registered Office: 37 Ninian Park Road, Riverside, Cardiff, South Glamorgan, Wales, UK.</p>
+              <p className="mt-3 italic">
+                Her Web Impact CIC exists to support digital inclusion and accessibility through community-designed technology.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
-
-    {/* Footer */}
-    <footer className="bg-green-900 text-white py-8">
-      <div className="container mx-auto px-4">
-
-        {/* Top row: 3 evenly spaced sections */}
-        <div className="grid grid-cols-1 md:grid-cols-3 items-center text-sm mb-4 text-center md:text-left">
-          
-          {/* Left: Company name */}
-          <div className="font-semibold text-lg mb-4 md:mb-0">
-            Her Web Impact CIC
-          </div>
-
-          {/* Middle: Section links */}
-          <div className="flex justify-center space-x-4 mb-4 md:mb-0">
-            <a href="#about" className="hover:text-yellow-400 transition-colors">About</a>
-            <a href="#projects" className="hover:text-yellow-400 transition-colors">Projects</a>
-            <a href="#contact" className="hover:text-yellow-400 transition-colors">Contact</a>
-          </div>
-        </div>
-
-        {/* Bottom row: copyright */}
-        <div className="text-sm text-green-200 text-center md:text-left">
-          © 2025 Her Web Impact CIC. All rights reserved.
-        </div>
-
-        <div className="text-xs text-green-200 text-center md:text-left mt-2">
-          Registered in England & Wales as a Community Interest Company.  
-          Company No. 16524652.  
-          Registered Office: 37 Ninian park road, Riverside,Cardiff. South Glamorgan, Wales, UK.
-          <br />
-          <span className="block mt-1">Her Web Impact CIC exists to support digital inclusion and accessibility through community-designed technology.</span>
-        </div>
-        
-      </div>
-    </footer>
+        </footer>
+      </main>
     </div>
   )
 }
+
+function Card({
+  title,
+  text,
+  icon,
+}: {
+  title: string
+  text: string
+  icon: React.ReactNode
+}) {
+  return (
+    <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">
+          {icon}
+        </div>
+        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+      </div>
+      <p className="mt-4 text-sm text-gray-700 leading-relaxed">{text}</p>
+    </div>
+  )
+}
+
+function FocusItem({
+  icon,
+  title,
+  text,
+}: {
+  icon: React.ReactNode
+  title: string
+  text: string
+}) {
+  return (
+    <div className="text-center">
+      <div className="mx-auto w-12 h-12 rounded-full bg-[#F3E9FF] flex items-center justify-center">
+        {icon}
+      </div>
+      <div className="mt-4 font-bold text-gray-900">{title}</div>
+      <div className="mt-2 text-sm text-gray-700 leading-relaxed">{text}</div>
+    </div>
+  )
+}
+
+function InfoCard({
+  icon,
+  title,
+  children,
+}: {
+  icon: React.ReactNode
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">
+          {icon}
+        </div>
+        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+      </div>
+      <div className="mt-4">{children}</div>
+    </div>
+  )
+}
+
+
+
+
+
