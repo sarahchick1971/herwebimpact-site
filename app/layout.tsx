@@ -1,9 +1,12 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Her Web Impact',
-  description: 'Empowering communities through digital tools',
+  description: 'Digital tools made with communities, not just for them',
 }
 
 export default function RootLayout({
@@ -12,12 +15,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <head>
-      <link rel="icon" href="/images/favicon.ico" />
+        <link rel="icon" href="/images/favicon.ico" />
       </head>
       <body>{children}</body>
     </html>
   )
 }
-
