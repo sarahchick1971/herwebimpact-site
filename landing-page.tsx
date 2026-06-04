@@ -316,8 +316,8 @@ export default function Page() {
               </div>
               <div className="order-1 md:order-2">
                 <Image
-                  src="/images/hands.jpg"
-                  alt="Community members collaborating together"
+                  src="/images/IMG_1256.jpg"
+                  alt="Participants working on laptops during a Her Web Impact digital skills workshop"
                   width={600}
                   height={450}
                   className="rounded-2xl object-cover w-full h-72 md:h-96 shadow-md"
