@@ -14,6 +14,7 @@ import {
   Globe,
   Mail,
   MapPin,
+  Phone,
   Handshake,
   Menu,
   X,
@@ -66,7 +67,6 @@ export default function Page() {
   const navItems = useMemo(
     () => [
       { id: "about",     label: t.nav.about },
-      { id: "our-story", label: t.nav.ourStory },
       { id: "workshop",  label: t.nav.workshop },
       { id: "what-we-do", label: t.nav.whatWeDo },
       { id: "focus",     label: t.nav.ourPrinciples },
@@ -244,7 +244,7 @@ export default function Page() {
                   {t.hero.getInTouch}
                 </button>
                 <button
-                  onClick={() => scrollTo("what-we-do")}
+                  onClick={() => scrollTo("workshop")}
                   className="rounded-full border border-[#B86BFF]/50 bg-white px-6 py-2.5 text-sm font-semibold text-gray-900 hover:bg-[#F3E9FF] transition-colors"
                 >
                   {t.hero.ourWork}
@@ -262,10 +262,16 @@ export default function Page() {
                   height={150}
                   className="flex-shrink-0"
                 />
-                <div className="text-center sm:text-left">
+                <div className="flex-1 text-center sm:text-left">
                   <p className="font-semibold text-gray-900">{t.lottery.heading}</p>
                   <p className="text-gray-700 mt-1 leading-relaxed">{t.lottery.description}</p>
                 </div>
+                <button
+                  onClick={() => scrollTo("workshop")}
+                  className="rounded-full bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#6D28D9] transition-colors whitespace-nowrap flex-shrink-0"
+                >
+                  {t.lottery.cta}
+                </button>
               </div>
             </div>
           </div>
@@ -275,7 +281,7 @@ export default function Page() {
         <section id="about" className="relative">
           <div className="bg-[#8F6CF3]">
             <div className="mx-auto max-w-5xl px-4 py-16 md:py-20 text-center text-white relative">
-              <div className="text-xs font-semibold tracking-widest opacity-90">{t.about.label}</div>
+              <div className="text-sm font-semibold tracking-widest uppercase opacity-90">{t.about.label}</div>
 
               <h2 className="mt-5 text-3xl md:text-5xl font-extrabold leading-tight">
                 {t.about.heading}
@@ -300,7 +306,7 @@ export default function Page() {
           <div className="mx-auto max-w-5xl px-4 pb-16 md:pb-20">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
-                <div className="text-sm font-semibold text-[#6D28D9] mb-2">{t.story.label}</div>
+                <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase mb-2">{t.story.label}</div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
                   {t.story.heading}
                 </h2>
@@ -324,133 +330,55 @@ export default function Page() {
         {/* WORKSHOP */}
         <section id="workshop" className="bg-[#EEE7FF]">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
+
+            <div className="text-center mb-10">
+              <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase">{t.workshop.label}</div>
+              <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-gray-900">{t.workshop.sectionHeading}</h2>
+            </div>
+
+            {/* Coming soon */}
             <div className="rounded-2xl bg-white border-2 border-[#B86BFF]/40 shadow-md overflow-hidden">
-
-              {/* Header bar */}
-              <div className="bg-[#8F6CF3] px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <span className="inline-block rounded-full bg-white text-[#8B5CF6] text-xs font-extrabold px-3 py-1 mb-2 tracking-wide">
-                    {t.workshop.badge}
-                  </span>
-                  <h2 className="text-2xl md:text-3xl font-extrabold text-white leading-tight">
-                    {t.workshop.heading}
-                  </h2>
-                </div>
-                <div className="text-white/90 text-sm font-medium text-left sm:text-right shrink-0">
-                  <p className="font-semibold">{t.workshop.venue}</p>
-                  <p>{t.workshop.time}</p>
-                </div>
+              <div className="bg-[#8F6CF3] px-6 py-5">
+                <span className="inline-block rounded-full bg-white text-[#8B5CF6] text-xs font-extrabold px-3 py-1 mb-3 tracking-wide">
+                  {t.workshop.comingSoonBadge}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white leading-tight">
+                  {t.workshop.comingSoonHeading}
+                </h3>
               </div>
-
-              <div className="px-6 py-6">
-                {/* Dates + Included grid */}
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-extrabold text-gray-900 mb-3">{t.workshop.datesLabel}</h3>
-                    <ul className="space-y-1.5 text-sm text-gray-800 font-medium">
-                      {t.workshop.dates.map((d) => (
-                        <li key={d} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#B86BFF] flex-shrink-0" />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="rounded-xl bg-[#F5EDFF] border border-[#B86BFF]/30 p-4">
-                    <h3 className="font-extrabold text-gray-900 mb-3 text-center">{t.workshop.includedLabel}</h3>
-                    <ul className="space-y-2 text-sm text-gray-800 font-medium">
-                      {t.workshop.included.map((item) => (
-                        <li key={item} className="flex items-start gap-2">
-                          <span className="text-[#8B5CF6] font-black mt-0.5">✓</span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Dashed separator */}
-                <div className="my-5 border-t-2 border-dashed border-[#B86BFF]/40" />
-
-                {/* Bullet points */}
-                <ul className="space-y-2 mb-6">
-                  {t.workshop.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-sm text-gray-800">
-                      <span className="text-[#8B5CF6] font-black mt-0.5">✓</span>
-                      <span><strong>{b.split(" ").slice(0, 2).join(" ")}</strong>{" "}{b.split(" ").slice(2).join(" ")}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Dashed separator */}
-                <div className="mb-5 border-t-2 border-dashed border-[#B86BFF]/40" />
-
-                {/* Sign up */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="text-sm text-gray-700 space-y-1">
-                    <p className="font-extrabold text-gray-900 text-base">{t.workshop.signUpHeading}</p>
-                    <p>
-                      <span className="font-semibold">{lang === "en" ? "Call:" : "Ffoniwch:"}</span>{" "}
-                      <a href={`tel:${t.workshop.phone}`} className="text-[#6D28D9] hover:underline font-semibold">
-                        {t.workshop.phone}
-                      </a>
-                    </p>
-                    <p>
-                      <span className="font-semibold">{lang === "en" ? "Email:" : "E-bost:"}</span>{" "}
-                      <a href="mailto:hello@herwebimpact.org.uk" className="text-[#6D28D9] hover:underline font-semibold">
-                        hello@herwebimpact.org.uk
-                      </a>
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1 italic">{t.workshop.funded}</p>
-                  </div>
-                  <a
-                    href="https://forms.gle/KuZQoXV8MZXXswFv9"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors whitespace-nowrap"
-                  >
-                    {t.workshop.signUpCta}
-                  </a>
-                </div>
+              <div className="px-6 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <p className="text-gray-700 text-sm leading-relaxed max-w-lg">{t.workshop.comingSoonBody}</p>
+                <button
+                  onClick={() => scrollTo("contact")}
+                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors whitespace-nowrap"
+                >
+                  {t.workshop.comingSoonCta}
+                </button>
               </div>
             </div>
 
-            {/* Course 2 — fully booked */}
-            <div className="mt-6 rounded-2xl bg-gray-50 border-2 border-gray-200 overflow-hidden opacity-80">
-              <div className="bg-gray-300 px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <span className="inline-block rounded-full bg-white text-gray-600 text-xs font-extrabold px-3 py-1 mb-2 tracking-wide">
-                    {t.workshop.course2Badge}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-gray-700 leading-tight">
-                    {t.workshop.heading}
-                  </h3>
-                  <p className="text-sm text-gray-600 font-medium mt-1">{t.workshop.course2Partner}</p>
-                </div>
-                <div className="text-gray-600 text-sm font-medium text-left sm:text-right shrink-0">
-                  <p className="font-semibold">{t.workshop.course2Venue}</p>
-                  <p>{t.workshop.course2Time}</p>
-                </div>
+            {/* Previous workshops */}
+            <div className="mt-6 rounded-2xl bg-gray-50 border-2 border-gray-200 overflow-hidden">
+              <div className="bg-gray-300 px-6 py-5">
+                <span className="inline-block rounded-full bg-white text-gray-600 text-xs font-extrabold px-3 py-1 mb-2 tracking-wide">
+                  {t.workshop.previousBadge}
+                </span>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-gray-700 leading-tight">
+                  {t.workshop.previousHeading}
+                </h3>
               </div>
-
-              <div className="px-6 py-6">
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="font-extrabold text-gray-700 mb-3">{t.workshop.datesLabel}</h3>
-                    <ul className="space-y-1.5 text-sm text-gray-600 font-medium">
-                      {t.workshop.dates.map((d) => (
-                        <li key={d} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="flex items-center justify-center rounded-xl bg-gray-100 border border-gray-200 p-4">
-                    <p className="text-sm text-gray-600 text-center leading-relaxed">{t.workshop.course2Note}</p>
-                  </div>
+              <div className="px-6 py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="text-sm text-gray-600 space-y-1">
+                  <p>{t.workshop.previousVenues}</p>
+                  <p>{t.workshop.previousDates}</p>
+                  <p className="italic">{t.workshop.previousFunded}</p>
                 </div>
+                <a
+                  href="/gallery"
+                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors whitespace-nowrap text-center"
+                >
+                  {t.workshop.previousCta}
+                </a>
               </div>
             </div>
 
@@ -458,16 +386,13 @@ export default function Page() {
         </section>
 
         {/* WHAT WE DO */}
-        <section id="what-we-do" className="bg-[#EEE7FF]">
+        <section id="what-we-do" className="bg-white">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
             <div className="text-center">
-              <div className="text-sm font-semibold text-[#6D28D9]">{t.whatWeDo.label}</div>
+              <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase">{t.whatWeDo.label}</div>
               <h2 className="mt-4 text-3xl md:text-5xl font-extrabold text-gray-900">
                 {t.whatWeDo.heading}
               </h2>
-              <p className="mt-6 text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                {t.whatWeDo.description}
-              </p>
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-2">
@@ -480,14 +405,12 @@ export default function Page() {
         </section>
 
         {/* OUR PRINCIPLES */}
-        <section id="focus" className="bg-white">
+        <section id="focus" className="bg-gray-50">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
-            <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
-              {t.principles.heading}
-            </h2>
-            <p className="mt-6 text-center text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              {t.principles.description}
-            </p>
+            <div className="text-center">
+              <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase">{t.principles.label}</div>
+              <p className="mt-4 text-3xl md:text-5xl font-extrabold text-gray-900">{t.principles.description}</p>
+            </div>
 
             <div className="mt-10 grid gap-8 md:grid-cols-4">
               <FocusItem icon={<Accessibility className="w-6 h-6 text-[#8A4DFF]" />} title={t.principles.items[0].title} text={t.principles.items[0].text} />
@@ -502,10 +425,19 @@ export default function Page() {
         <section id="voices" className="bg-[#F5EDFF]">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
             <div className="text-center">
-              <div className="text-sm font-semibold text-[#6D28D9]">{t.voices.label}</div>
+              <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase">{t.voices.label}</div>
               <h2 className="mt-4 text-3xl md:text-4xl font-extrabold text-gray-900">
                 {t.voices.heading}
               </h2>
+            </div>
+
+            <div className="mt-10 grid grid-cols-3 gap-4 md:gap-8">
+              {t.voices.stats.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-3xl md:text-5xl font-extrabold text-[#7C3AED]">{stat.number}</p>
+                  <p className="mt-2 text-xs md:text-sm text-gray-600 leading-snug">{stat.label}</p>
+                </div>
+              ))}
             </div>
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
@@ -519,6 +451,9 @@ export default function Page() {
         {/* CONTACT */}
         <section id="contact" className="bg-white">
           <div className="mx-auto max-w-5xl px-4 py-16 md:py-20">
+            <div className="text-center mb-2">
+              <div className="text-sm font-semibold text-[#6D28D9] tracking-widest uppercase">{t.contact.label}</div>
+            </div>
             <h2 className="text-center text-3xl md:text-5xl font-extrabold text-gray-900">
               {t.contact.heading}
             </h2>
@@ -535,6 +470,12 @@ export default function Page() {
                       {t.contact.emailLabel}{" "}
                       <a className="text-[#6D28D9] font-semibold hover:underline" href="mailto:hello@herwebimpact.org.uk">
                         hello@herwebimpact.org.uk
+                      </a>
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                      <a className="text-[#6D28D9] font-semibold hover:underline" href="tel:07482501775">
+                        07482 501 775
                       </a>
                     </p>
                     <p className="flex items-center gap-2">
@@ -753,6 +694,12 @@ export default function Page() {
                       hello@herwebimpact.org.uk
                     </a>
                   </li>
+                  <li className="flex items-center gap-2 justify-center md:justify-start">
+                    <Phone className="w-4 h-4 flex-shrink-0 text-white/60" />
+                    <a href="tel:07482501775" className="hover:text-white transition-colors">
+                      07482 501 775
+                    </a>
+                  </li>
                   <li className="flex items-start gap-2 justify-center md:justify-start">
                     <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-white/60" />
                     <span>{t.footer.location}</span>
@@ -762,7 +709,7 @@ export default function Page() {
             </div>
 
             {/* Legal row */}
-            <div className="border-t border-white/20 mt-10 pt-6 text-xs text-black leading-loose">
+            <div className="border-t border-white/20 mt-10 pt-6 text-xs text-white/70 leading-loose">
               <p>{t.footer.legal1}</p>
               <p className="mt-1">{t.footer.legal2}</p>
             </div>
