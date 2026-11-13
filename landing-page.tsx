@@ -50,6 +50,7 @@ export default function Page() {
   const successHeadingRef = useRef<HTMLParagraphElement>(null)
   const topHeadingRef = useRef<HTMLHeadingElement>(null)
   const pendingFocusId = useRef<string | null>(null)
+  const desktopNavRef = useRef<HTMLDivElement>(null)
 
   const t = translations[lang]
 
@@ -93,6 +94,27 @@ export default function Page() {
     return () => document.removeEventListener("keydown", onKey)
   }, [menu])
 
+  // Keep focused and scrolled-to content clear of the fixed desktop nav,
+  // even when the nav wraps onto more lines because text has been enlarged
+  useEffect(() => {
+    const nav = desktopNavRef.current
+    if (!nav) return
+    const update = () => {
+      const r = nav.getBoundingClientRect()
+      const offset = r.height > 0 ? Math.ceil(r.bottom + 16) : 16
+      document.documentElement.style.scrollPaddingTop = `${offset}px`
+      document.documentElement.style.scrollPaddingBottom = "16px"
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(nav)
+    window.addEventListener("resize", update)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener("resize", update)
+    }
+  }, [])
+
   // Close the mobile menu if the window grows past the mobile breakpoint
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)")
@@ -122,7 +144,8 @@ export default function Page() {
     if (!el) return
     setMenu(false)
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const y = el.getBoundingClientRect().top + window.scrollY - 96
+    const offset = parseFloat(document.documentElement.style.scrollPaddingTop) || 96
+    const y = el.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" })
     // Move keyboard and screen-reader focus to the section that was chosen.
     // If the mobile menu is open, wait until it has closed (the page is inert until then).
@@ -155,6 +178,7 @@ export default function Page() {
         email: form.email,
         message: form.message,
         honeypot: form.honeypot,
+        lang,
       })
       if (result.success) {
         setSent(true)
@@ -207,7 +231,7 @@ export default function Page() {
 
       <header>
       {/* DESKTOP PILL NAV */}
-      <div className="hidden lg:flex fixed top-3 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]" inert={menu}>
+      <div ref={desktopNavRef} className="hidden lg:flex fixed top-3 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-2rem)]" inert={menu}>
         <div className="rounded-3xl border-2 border-[#B86BFF] bg-white/90 backdrop-blur-md shadow-lg px-6 py-3">
           <nav aria-label={t.a11y.menuLabel} className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {navItems.map((item) => (
@@ -343,13 +367,13 @@ export default function Page() {
                   height={150}
                   className="flex-shrink-0"
                 />
-                <div className="flex-1 text-center sm:text-left">
+                <div className="flex-1 min-w-0 text-center sm:text-left">
                   <p className="font-semibold text-gray-900">{t.lottery.heading}</p>
                   <p className="text-gray-700 mt-1 leading-relaxed">{t.lottery.description}</p>
                 </div>
                 <button
                   onClick={() => scrollTo("workshop")}
-                  className="rounded-full bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#6D28D9] transition-colors whitespace-nowrap flex-shrink-0"
+                  className="rounded-full bg-[#7C3AED] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#6D28D9] transition-colors text-center"
                 >
                   {t.lottery.cta}
                 </button>
@@ -431,7 +455,7 @@ export default function Page() {
                 <p className="text-gray-700 text-sm leading-relaxed max-w-lg">{t.workshop.comingSoonBody}</p>
                 <button
                   onClick={() => scrollTo("contact")}
-                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors whitespace-nowrap"
+                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors text-center"
                 >
                   {t.workshop.comingSoonCta}
                 </button>
@@ -456,7 +480,7 @@ export default function Page() {
                 </div>
                 <a
                   href="/gallery"
-                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors whitespace-nowrap text-center"
+                  className="rounded-full bg-[#7C3AED] px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-[#6D28D9] transition-colors text-center"
                 >
                   {t.workshop.previousCta}
                 </a>
@@ -596,6 +620,7 @@ export default function Page() {
                         setForm({ name: "", email: "", message: "", honeypot: "" })
                         setSent(false)
                         setFormError(null)
+                        setTimeout(() => document.getElementById("name")?.focus(), 0)
                       }}
                       type="button"
                       className="mt-4 text-sm text-[#6D28D9] font-semibold underline-offset-4 hover:underline"

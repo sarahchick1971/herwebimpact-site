@@ -113,3 +113,11 @@
 h1, h2, h3, h4, p, li, a {
   overflow-wrap: break-word;
 }
+
+/* Grid children may shrink so enlarged text wraps inside cards */
+.grid > * {
+  min-width: 0;
+}
+h1, h2, h3, h4 {
+  overflow-wrap: anywhere;
+}
