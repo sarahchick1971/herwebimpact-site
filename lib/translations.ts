@@ -3,6 +3,18 @@
 export const translations = {
   en: {
     langButton: "Cymraeg",
+    a11y: {
+      skip: "Skip to main content",
+      menuLabel: "Main menu",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
+      backToTop: "Back to top",
+      langChanged: "The page is now in English.",
+      facebook: "Her Web Impact on Facebook",
+      instagram: "Her Web Impact on Instagram",
+      linkedin: "Her Web Impact on LinkedIn",
+      formError: "Something went wrong. Please try again.",
+    },
     nav: {
       about: "About",
       ourStory: "Our Story",
@@ -172,6 +184,18 @@ export const translations = {
 
   cy: {
     langButton: "English",
+    a11y: {
+      skip: "Neidio i'r prif gynnwys",
+      menuLabel: "Prif ddewislen",
+      openMenu: "Agor y ddewislen",
+      closeMenu: "Cau'r ddewislen",
+      backToTop: "Yn ôl i'r brig",
+      langChanged: "Mae'r dudalen bellach yn Gymraeg.",
+      facebook: "Her Web Impact ar Facebook",
+      instagram: "Her Web Impact ar Instagram",
+      linkedin: "Her Web Impact ar LinkedIn",
+      formError: "Aeth rhywbeth o'i le. Rhowch gynnig arall arni.",
+    },
     nav: {
       about: "Amdanom",
       ourStory: "Ein Stori",
