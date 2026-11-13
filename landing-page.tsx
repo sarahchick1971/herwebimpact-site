@@ -396,11 +396,11 @@ export default function Page() {
                 {t.about.description}
               </p>
 
-              <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-sm md:text-base">
+              <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto text-sm md:text-base">
                 {t.about.pillars.map((p) => (
-                  <div key={p}>{p}</div>
+                  <li key={p}>{p}</li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
           <div className="bg-white h-16" />
@@ -517,7 +517,7 @@ export default function Page() {
               <p className="mt-4 text-lg text-gray-700">{t.principles.description}</p>
             </div>
 
-            <div className="mt-10 grid gap-8 md:grid-cols-4">
+            <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               <FocusItem icon={<Accessibility className="w-6 h-6 text-[#8A4DFF]" />} title={t.principles.items[0].title} text={t.principles.items[0].text} />
               <FocusItem icon={<Network className="w-6 h-6 text-[#8A4DFF]" />} title={t.principles.items[1].title} text={t.principles.items[1].text} />
               <FocusItem icon={<GitBranch className="w-6 h-6 text-[#8A4DFF]" />} title={t.principles.items[2].title} text={t.principles.items[2].text} />
@@ -863,7 +863,7 @@ function FocusItem({ icon, title, text }: { icon: ReactNode; title: string; text
     <div className="text-center">
       <div className="mx-auto w-12 h-12 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
       <h3 className="mt-4 font-bold text-gray-900">{title}</h3>
-      <div className="mt-2 text-sm text-gray-700 leading-relaxed">{text}</div>
+      <p className="mt-2 text-sm text-gray-700 leading-relaxed">{text}</p>
     </div>
   )
 }
