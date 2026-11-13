@@ -536,10 +536,10 @@ export default function Page() {
               </h2>
             </div>
 
-            <div className="mt-10 grid grid-cols-3 gap-4 md:gap-8">
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
               {t.voices.stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-3xl md:text-5xl font-extrabold text-[#7C3AED]">{stat.number}</p>
+                  <p className="text-3xl md:text-5xl font-extrabold text-[#7C3AED] whitespace-nowrap">{stat.number}</p>
                   <p className="mt-2 text-xs md:text-sm text-gray-600 leading-snug">{stat.label}</p>
                 </div>
               ))}
@@ -601,7 +601,7 @@ export default function Page() {
 
               {/* Contact form */}
               <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex flex-col items-start sm:flex-row sm:items-center gap-3 mb-6">
                   <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">
                     <Monitor className="w-5 h-5 text-[#8A4DFF]" />
                   </div>
@@ -849,7 +849,7 @@ export default function Page() {
 function Card({ title, text, icon }: { title: string; text: string; icon: ReactNode }) {
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-start sm:flex-row sm:items-center gap-3">
         <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
         <h3 className="min-w-0 text-lg font-bold text-gray-900">{title}</h3>
       </div>
@@ -871,7 +871,7 @@ function FocusItem({ icon, title, text }: { icon: ReactNode; title: string; text
 function InfoCard({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col items-start sm:flex-row sm:items-center gap-3">
         <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
         <h3 className="min-w-0 text-lg font-bold text-gray-900">{title}</h3>
       </div>
