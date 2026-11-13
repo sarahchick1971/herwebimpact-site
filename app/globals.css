@@ -102,3 +102,24 @@
     outline-color: #ffffff;
   }
 }
+
+/* Sections, the page heading and messages receive focus from script so screen
+   readers follow the reader; they are not controls, so no outline is shown. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Long words and email addresses wrap instead of being cut off when text is enlarged */
+h1, h2, h3, h4, p, li, a {
+  overflow-wrap: break-word;
+}
+
+/* Grid children may shrink so enlarged text wraps inside cards */
+.grid > * {
+  min-width: 0;
+}
+
+/* Hyphenate long words in headings (uses the page language, English or Welsh) */
+h1, h2, h3, h4 {
+  hyphens: auto;
+}
