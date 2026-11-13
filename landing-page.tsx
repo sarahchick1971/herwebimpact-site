@@ -359,15 +359,15 @@ export default function Page() {
 
             {/* NATIONAL LOTTERY BANNER */}
             <div className="mt-8">
-              <div className="rounded-2xl border border-[#B86BFF]/25 bg-[#F5EDFF] px-4 py-4 md:px-6 md:py-4 flex flex-col sm:flex-row items-center gap-4 shadow-sm">
+              <div className="rounded-2xl border border-[#B86BFF]/25 bg-[#F5EDFF] px-4 py-4 md:px-6 md:py-4 flex flex-col lg:flex-row items-center gap-4 shadow-sm">
                 <Image
                   src="/images/tnlcf-full-colour-cy.png"
                   alt="The National Lottery Community Fund (Cymru)"
                   width={150}
                   height={150}
-                  className="flex-shrink-0"
+                  className="flex-shrink-0 max-w-full h-auto"
                 />
-                <div className="flex-1 min-w-0 text-center sm:text-left">
+                <div className="flex-1 min-w-0 text-center lg:text-left">
                   <p className="font-semibold text-gray-900">{t.lottery.heading}</p>
                   <p className="text-gray-700 mt-1 leading-relaxed">{t.lottery.description}</p>
                 </div>
@@ -602,10 +602,10 @@ export default function Page() {
               {/* Contact form */}
               <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">
+                  <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">
                     <Monitor className="w-5 h-5 text-[#8A4DFF]" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900">{t.contact.formTitle}</h3>
+                  <h3 className="min-w-0 text-lg font-bold text-gray-900">{t.contact.formTitle}</h3>
                 </div>
 
                 {sent ? (
@@ -850,8 +850,8 @@ function Card({ title, text, icon }: { title: string; text: string; icon: ReactN
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
-        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
+        <h3 className="min-w-0 text-lg font-bold text-gray-900">{title}</h3>
       </div>
       <p className="mt-4 text-sm text-gray-700 leading-relaxed">{text}</p>
     </div>
@@ -872,8 +872,8 @@ function InfoCard({ icon, title, children }: { icon: ReactNode; title: string; c
   return (
     <div className="rounded-2xl bg-white border border-[#B86BFF]/20 shadow-sm p-6">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
-        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-[#F3E9FF] flex items-center justify-center">{icon}</div>
+        <h3 className="min-w-0 text-lg font-bold text-gray-900">{title}</h3>
       </div>
       <div className="mt-4">{children}</div>
     </div>

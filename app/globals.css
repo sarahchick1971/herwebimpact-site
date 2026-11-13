@@ -118,3 +118,8 @@ h1, h2, h3, h4, p, li, a {
 .grid > * {
   min-width: 0;
 }
+
+/* Hyphenate long words in headings (uses the page language, English or Welsh) */
+h1, h2, h3, h4 {
+  hyphens: auto;
+}
