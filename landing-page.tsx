@@ -108,7 +108,7 @@ export default function Page() {
       className={
         mobile
           ? "rounded-full border-2 border-[#B86BFF] bg-white px-5 py-2 text-sm font-bold text-gray-900 hover:bg-[#F3E9FF] transition-colors"
-          : "rounded-full border-2 border-[#B86BFF] px-3 py-1 text-xs font-bold text-[#8B5CF6] hover:bg-[#F3E9FF] transition-colors"
+          : "rounded-full border-2 border-[#B86BFF] px-3 py-1 text-xs font-bold text-[#6D28D9] hover:bg-[#F3E9FF] transition-colors"
       }
       aria-label={`Switch to ${t.langButton}`}
     >
@@ -136,6 +136,7 @@ export default function Page() {
       <Circle className="w-20 h-20 top-[2200px] left-[70%]" />
       <Circle className="w-24 h-24 top-[2780px] right-[18%]" />
 
+      <header>
       {/* DESKTOP PILL NAV */}
       <div className="hidden md:flex fixed top-3 left-1/2 -translate-x-1/2 z-50">
         <div className="rounded-full border-2 border-[#B86BFF] bg-white/90 backdrop-blur-md shadow-lg px-6 py-3">
@@ -144,7 +145,7 @@ export default function Page() {
               <button
                 key={item.id}
                 onClick={() => scrollTo(item.id)}
-                className="text-sm font-semibold text-gray-900 hover:text-[#8B5CF6] focus:text-[#8B5CF6] transition-colors whitespace-nowrap"
+                className="text-sm font-semibold text-gray-900 hover:text-[#6D28D9] focus:text-[#6D28D9] transition-colors whitespace-nowrap"
               >
                 {item.label}
               </button>
@@ -196,8 +197,8 @@ export default function Page() {
                     onBlur={() => setPressedItem(null)}
                     className={[
                       "w-full text-2xl font-semibold tracking-tight transition-colors",
-                      pressedItem === item.id ? "text-[#8B5CF6]" : "text-gray-900",
-                      "hover:text-[#8B5CF6] focus:text-[#8B5CF6]",
+                      pressedItem === item.id ? "text-[#6D28D9]" : "text-gray-900",
+                      "hover:text-[#6D28D9] focus:text-[#6D28D9]",
                     ].join(" ")}
                   >
                     {item.label}
@@ -211,6 +212,7 @@ export default function Page() {
           </div>
         </div>
       )}
+      </header>
 
       <main id="main-content" className="relative">
         {/* HERO */}
@@ -279,21 +281,21 @@ export default function Page() {
 
         {/* ABOUT — purple band */}
         <section id="about" className="relative">
-          <div className="bg-[#8F6CF3]">
+          <div className="bg-[#6D4ED9]">
             <div className="mx-auto max-w-5xl px-4 py-16 md:py-20 text-center text-white relative">
-              <div className="text-sm font-semibold tracking-widest uppercase opacity-90">{t.about.label}</div>
+              <div className="text-sm font-semibold tracking-widest uppercase">{t.about.label}</div>
 
               <h2 className="mt-5 text-3xl md:text-5xl font-extrabold leading-tight">
                 {t.about.heading}
               </h2>
 
-              <p className="mt-6 max-w-3xl mx-auto text-white/90 text-base md:text-lg leading-relaxed">
+              <p className="mt-6 max-w-3xl mx-auto text-white text-base md:text-lg leading-relaxed">
                 {t.about.description}
               </p>
 
               <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto text-sm md:text-base">
                 {t.about.pillars.map((p) => (
-                  <div key={p} className="opacity-95">{p}</div>
+                  <div key={p}>{p}</div>
                 ))}
               </div>
             </div>
@@ -338,8 +340,8 @@ export default function Page() {
 
             {/* Coming soon */}
             <div className="rounded-2xl bg-white border-2 border-[#B86BFF]/40 shadow-md overflow-hidden">
-              <div className="bg-[#8F6CF3] px-6 py-5">
-                <span className="inline-block rounded-full bg-white text-[#8B5CF6] text-xs font-extrabold px-3 py-1 mb-3 tracking-wide">
+              <div className="bg-[#6D4ED9] px-6 py-5">
+                <span className="inline-block rounded-full bg-white text-[#6D28D9] text-xs font-extrabold px-3 py-1 mb-3 tracking-wide">
                   {t.workshop.comingSoonBadge}
                 </span>
                 <h3 className="text-2xl md:text-3xl font-extrabold text-white leading-tight">
@@ -547,7 +549,7 @@ export default function Page() {
                         aria-required="true"
                         value={form.name}
                         onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B86BFF]/50 focus:border-[#B86BFF]"
+                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D28D9] focus:border-[#6D28D9]"
                         placeholder={t.contact.namePlaceholder}
                       />
                     </div>
@@ -562,7 +564,7 @@ export default function Page() {
                         aria-required="true"
                         value={form.email}
                         onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B86BFF]/50 focus:border-[#B86BFF]"
+                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D28D9] focus:border-[#6D28D9]"
                         placeholder={t.contact.emailPlaceholder}
                       />
                     </div>
@@ -577,7 +579,7 @@ export default function Page() {
                         aria-required="true"
                         value={form.message}
                         onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B86BFF]/50 focus:border-[#B86BFF] resize-none"
+                        className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#6D28D9] focus:border-[#6D28D9] resize-none"
                         placeholder={t.contact.messagePlaceholder}
                       />
                     </div>
@@ -602,7 +604,7 @@ export default function Page() {
         </section>
 
         {/* FOOTER */}
-        <footer className="bg-[#8F6CF3]">
+        <footer className="bg-[#6D4ED9]">
           <div className="mx-auto max-w-5xl px-4 pt-12 pb-10">
 
             {/* Main footer grid */}
@@ -613,7 +615,7 @@ export default function Page() {
                 <button
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   aria-label="Back to top"
-                  className="focus:outline-none"
+                  className="rounded-md"
                 >
                   <Image
                     src="/images/her-web-impact-logo.png"
@@ -623,7 +625,7 @@ export default function Page() {
                     className="h-auto w-[180px] hover:opacity-80 transition-opacity"
                   />
                 </button>
-                <p className="text-sm text-white/80 leading-relaxed text-center md:text-left">
+                <p className="text-sm text-white leading-relaxed text-center md:text-left">
                   {t.footer.tagline}
                 </p>
                 <div className="flex items-center gap-3">
@@ -669,13 +671,13 @@ export default function Page() {
 
               {/* Col 2 — navigate */}
               <div className="text-center md:text-left">
-                <h4 className="text-xs font-semibold tracking-widest text-white/80 uppercase mb-4">
+                <h4 className="text-xs font-semibold tracking-widest text-white uppercase mb-4">
                   {t.footer.navigateLabel}
                 </h4>
-                <ul className="space-y-3 text-sm text-white/90">
+                <ul className="space-y-3 text-sm text-white">
                   {t.footer.navItems.map((item) => (
                     <li key={item.id}>
-                      <button onClick={() => scrollTo(item.id)} className="hover:text-white transition-colors">
+                      <button onClick={() => scrollTo(item.id)} className="underline-offset-4 hover:underline transition-colors">
                         {item.label}
                       </button>
                     </li>
@@ -685,23 +687,23 @@ export default function Page() {
 
               {/* Col 3 — contact */}
               <div className="text-center md:text-left">
-                <h4 className="text-xs font-semibold tracking-widest text-white/80 uppercase mb-4">
+                <h4 className="text-xs font-semibold tracking-widest text-white uppercase mb-4">
                   {t.footer.contactLabel}
                 </h4>
-                <ul className="space-y-3 text-sm text-white/90">
+                <ul className="space-y-3 text-sm text-white">
                   <li>
-                    <a href="mailto:hello@herwebimpact.org.uk" className="hover:text-white transition-colors">
+                    <a href="mailto:hello@herwebimpact.org.uk" className="underline-offset-4 hover:underline transition-colors">
                       hello@herwebimpact.org.uk
                     </a>
                   </li>
                   <li className="flex items-center gap-2 justify-center md:justify-start">
-                    <Phone className="w-4 h-4 flex-shrink-0 text-white/60" />
-                    <a href="tel:07482501775" className="hover:text-white transition-colors">
+                    <Phone className="w-4 h-4 flex-shrink-0 text-white" aria-hidden="true" />
+                    <a href="tel:07482501775" className="underline-offset-4 hover:underline transition-colors">
                       07482 501 775
                     </a>
                   </li>
                   <li className="flex items-start gap-2 justify-center md:justify-start">
-                    <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-white/60" />
+                    <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-white" aria-hidden="true" />
                     <span>{t.footer.location}</span>
                   </li>
                 </ul>
@@ -709,7 +711,7 @@ export default function Page() {
             </div>
 
             {/* Legal row */}
-            <div className="border-t border-white/20 mt-10 pt-6 text-xs text-white/70 leading-loose">
+            <div className="border-t border-white/40 mt-10 pt-6 text-xs text-white leading-loose">
               <p>{t.footer.legal1}</p>
               <p className="mt-1">{t.footer.legal2}</p>
             </div>
@@ -720,7 +722,7 @@ export default function Page() {
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Back to top"
-          className={`fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-[#7C3AED] text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-[#6D28D9] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7C3AED] focus-visible:ring-offset-2 ${
+          className={`fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-[#7C3AED] text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:bg-[#6D28D9] focus-visible:ring-2 focus-visible:ring-[#111827] focus-visible:ring-offset-2 ${
             showScrollTop ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >

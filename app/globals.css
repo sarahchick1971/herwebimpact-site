@@ -89,3 +89,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Accessibility: clearly visible keyboard focus everywhere */
+@layer base {
+  :focus-visible {
+    outline: 3px solid #111827;
+    outline-offset: 3px;
+  }
+  /* White focus outline on the purple bands and footer */
+  .bg-\[\#6D4ED9\] :focus-visible,
+  footer :focus-visible {
+    outline-color: #ffffff;
+  }
+}
